@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class MealsCategoriesViewModel(private val repository: MealzRepository = MealzRepository()) :
+class MealsCategoriesViewModel(private val repository: MealzRepository = MealzRepository.getInstance()) :
     ViewModel() {
 
     val mealsState: MutableState<List<MealsResponse>> = mutableStateOf(emptyList<MealsResponse>())
