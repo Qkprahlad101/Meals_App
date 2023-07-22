@@ -8,9 +8,9 @@ import retrofit2.http.GET
 
 class MealsWebService {
 
-    private lateinit var api :MealsApi
+    private lateinit var api: MealsApi
 
-    init{
+    init {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://www.themealdb.com/api/json/v1/1/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -18,12 +18,12 @@ class MealsWebService {
         api = retrofit.create(MealsApi::class.java)
     }
 
-    fun getMeals() : Call<MealsCategoriesResponse>{
+    suspend fun getMeals(): MealsCategoriesResponse {
         return api.getMeals()
     }
 
-    interface MealsApi{
+    interface MealsApi {
         @GET("categories.php")
-        fun getMeals() : Call<MealsCategoriesResponse>
+        suspend fun getMeals(): MealsCategoriesResponse
     }
 }

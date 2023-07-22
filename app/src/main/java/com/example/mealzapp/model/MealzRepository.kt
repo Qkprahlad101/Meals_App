@@ -8,18 +8,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MealzRepository(private val webService: MealsWebService = MealsWebService()) {
-    fun getMeals(successCallback: (response: MealsCategoriesResponse?) -> Unit){
-        return webService.getMeals().enqueue(object: Callback<MealsCategoriesResponse>{
-            override fun onResponse(
-                call: Call<MealsCategoriesResponse>,
-                response: Response<MealsCategoriesResponse>
-            ) {
-                if(response.isSuccessful)
-                    successCallback(response.body())
-            }
-            override fun onFailure(call: Call<MealsCategoriesResponse>, t: Throwable) {
-                Log.d("Api Failure", "onFailure: ")
-            }
-        })
+    suspend fun getMeals(): MealsCategoriesResponse {
+        return webService.getMeals()
     }
 }
