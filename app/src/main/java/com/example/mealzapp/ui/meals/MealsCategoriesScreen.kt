@@ -1,5 +1,6 @@
 package com.example.mealzapp.ui.meals
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -54,7 +55,7 @@ fun MealCategory(meal: MealsResponse) {
             .fillMaxWidth()
             .padding(top = 16.dp)
     ) {
-        Row {
+        Row(modifier = Modifier.animateContentSize()) {
             AsyncImage(
                 model = meal.imageUrl,
                 contentDescription = null,
@@ -87,7 +88,7 @@ fun MealCategory(meal: MealsResponse) {
                 imageVector = if(isExpanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
                 contentDescription = "Expand Icon",
                 modifier = Modifier.padding(8.dp)
-                           .align(Alignment.CenterVertically)
+                           .align(if(isExpanded) Alignment.CenterVertically else Alignment.Bottom)
                            .clickable { isExpanded = !isExpanded }
             )
         }
