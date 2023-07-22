@@ -48,7 +48,7 @@ fun MealsCategoriesScreen(navigationCallback: (String) -> Unit) {
 
 @Composable
 fun MealCategory(meal: MealsResponse, navigationCallback: (String) -> Unit) {
-    var isExpanded by remember{ mutableStateOf(false) }
+    var isExpanded by remember { mutableStateOf(false) }
     Card(
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
@@ -81,16 +81,17 @@ fun MealCategory(meal: MealsResponse, navigationCallback: (String) -> Unit) {
                     style = MaterialTheme.typography.bodySmall,
                     overflow = TextOverflow.Ellipsis,
                     color = Color.White.copy(alpha = 0.3f),
-                    maxLines = if(isExpanded) 10 else 4
+                    maxLines = if (isExpanded) 10 else 4
                 )
             }
 
             Icon(
-                imageVector = if(isExpanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
+                imageVector = if (isExpanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
                 contentDescription = "Expand Icon",
-                modifier = Modifier.padding(8.dp)
-                           .align(if(isExpanded) Alignment.CenterVertically else Alignment.Bottom)
-                           .clickable { isExpanded = !isExpanded }
+                modifier = Modifier
+                    .padding(8.dp)
+                    .align(if (isExpanded) Alignment.CenterVertically else Alignment.Bottom)
+                    .clickable { isExpanded = !isExpanded }
             )
         }
     }
