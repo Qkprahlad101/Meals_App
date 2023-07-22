@@ -16,19 +16,12 @@ import kotlinx.coroutines.launch
 class MealsCategoriesViewModel(private val repository: MealzRepository = MealzRepository()) :
     ViewModel() {
 
-    private val mealsJob = Job()
     val mealsState: MutableState<List<MealsResponse>> = mutableStateOf(emptyList<MealsResponse>())
     init{
-        val scope = CoroutineScope(mealsJob + Dispatchers.IO)
-        scope.launch(){
+        viewModelScope.launch(Dispatchers.IO){
             val meals = getMeals()
             mealsState.value = meals
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        mealsJob.cancel()
     }
 
     private suspend fun getMeals(): List<MealsResponse> {
