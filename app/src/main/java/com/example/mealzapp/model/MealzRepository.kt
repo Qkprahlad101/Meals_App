@@ -1,5 +1,6 @@
 package com.example.mealzapp.model
 
+import android.util.Log
 import com.example.mealzapp.model.api.MealsWebService
 import com.example.mealzapp.model.response.MealsCategoriesResponse
 import retrofit2.Call
@@ -17,7 +18,7 @@ class MealzRepository(private val webService: MealsWebService = MealsWebService(
                     successCallback(response.body())
             }
             override fun onFailure(call: Call<MealsCategoriesResponse>, t: Throwable) {
-                TODO("Not yet implemented")
+                Log.d("Api Failure", "onFailure: ")
             }
         })
     }
