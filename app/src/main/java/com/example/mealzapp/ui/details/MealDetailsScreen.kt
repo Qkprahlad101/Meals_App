@@ -1,5 +1,6 @@
 package com.example.mealzapp.ui.details
 
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,6 +30,7 @@ import kotlin.math.min
 fun MealDetailsScreen(meal: MealsResponse?) {
     val scrollState = rememberScrollState() //to enable scrolling
     val offset = min(1f, 1 - (scrollState.value / 600f)) //to enable image shrinking while scrolling list
+    val size by animateDpAsState(targetValue = max(0.dp, 200.dp * offset))
     Surface(color = MaterialTheme.colorScheme.background) {
         Column() {
             Surface(shadowElevation = 4.dp) {
@@ -44,7 +47,7 @@ fun MealDetailsScreen(meal: MealsResponse?) {
                             model = meal?.imageUrl,
                             contentDescription = "",
                             modifier = Modifier
-                                .size(max(100.dp, 200.dp * offset))
+                                .size(size)
                         )
                     }
                     Text(
