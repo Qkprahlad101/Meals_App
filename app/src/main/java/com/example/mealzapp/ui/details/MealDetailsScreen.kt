@@ -1,76 +1,88 @@
 package com.example.mealzapp.ui.details
 
-import androidx.compose.animation.animateColor
-import androidx.compose.animation.core.animateDp
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Button
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import coil.compose.AsyncImage
 import com.example.mealzapp.model.response.MealsResponse
+import kotlin.math.min
 
 @Composable
 fun MealDetailsScreen(meal: MealsResponse?) {
-    var profilePictureState by remember { mutableStateOf(MealProfilePictureState.Normal) }
-    val transition = updateTransition(targetState = profilePictureState, label = "")
-    val imageSizeDp by transition.animateDp(targetValueByState = { it.size }, label = "")
-    val imageColor by transition.animateColor(targetValueByState = { it.color }, label = "")
-    val imageBorderStroke by transition.animateDp(
-        targetValueByState = { it.borderWidth },
-        label = ""
-    )
-
-    Column() {
-        Row() {
-            Card(
-                modifier = Modifier.padding(16.dp),
-                shape = CircleShape,
-                border = BorderStroke(
-                    width = imageBorderStroke,
-                    color = imageColor
-                )
-            ) {
-                AsyncImage(
-                    model = meal?.imageUrl,
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(imageSizeDp)
-                        .padding(8.dp)
-                )
+    val scrollState = rememberScrollState() //to enable scrolling
+    val offset = min(1f, 1 - (scrollState.value / 600f)) //to enable image shrinking while scrolling list
+    Surface(color = MaterialTheme.colorScheme.background) {
+        Column() {
+            Surface(shadowElevation = 4.dp) {
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    Card(
+                        modifier = Modifier.padding(16.dp),
+                        shape = CircleShape,
+                        border = BorderStroke(
+                            width = 2.dp,
+                            color = Color.Green
+                        )
+                    ) {
+                        AsyncImage(
+                            model = meal?.imageUrl,
+                            contentDescription = "",
+                            modifier = Modifier
+                                .size(max(100.dp, 200.dp * offset))
+                        )
+                    }
+                    Text(
+                        meal?.name ?: "default name",
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .align(Alignment.CenterVertically)
+                    )
+                }
             }
-            Text(
-                meal?.name ?: "default name",
-                modifier = Modifier
-                    .padding(16.dp)
-                    .align(Alignment.CenterVertically)
-            )
+            Column(modifier = Modifier.verticalScroll(scrollState)) {
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+                Text("This is a text element.", modifier = Modifier.padding(32.dp))
+            }
         }
-        Button(
-            onClick = {
-                profilePictureState = if (profilePictureState == MealProfilePictureState.Normal) MealProfilePictureState.Expanded else MealProfilePictureState.Normal
-            },
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text("Change State of meal profile picture")
-        }
-
     }
 }
 
